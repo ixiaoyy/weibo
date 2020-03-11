@@ -19,4 +19,20 @@ class UsersController extends Controller
     {
         return view('users.show', compact('user'));
     }
+
+    /**
+      * Desc: 保存用户信息
+      * User: YuY
+      * Date: 2020/3/11
+      */
+    public function store(Request $request)
+    {
+        // 数据验证 - 再保存
+        $this->validate($request, [
+            'name' => 'required|unique:users|max:50',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|confirmed|min:6'
+        ]);
+        return;
+    }
 }
