@@ -35,7 +35,7 @@ class UsersController extends Controller
         ]);
 
         // 入库
-        $user = User::created([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),

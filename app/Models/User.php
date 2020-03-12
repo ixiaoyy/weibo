@@ -46,6 +46,7 @@ class User extends Authenticatable
     /**
       * Desc: 获取头像
       * Gravatar 为 “全球通用头像”，当你在 Gravatar 的服务器上放置了自己的头像后，可通过将自己的 Gravatar 登录邮箱进行 MD5 转码，并与 Gravatar 的 URL 进行拼接来获取到自己的 Gravatar 头像。
+     *  网站地址：https://en.gravatar.com/
       * User: YuY
       * Date: 2020/3/11
       */

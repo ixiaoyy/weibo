@@ -42,4 +42,17 @@ class SessionsController extends Controller
             return redirect()->back()->withInput();
         }
     }
+    
+    /**
+      * Desc: 删除会话数据，退出登录
+      * User: YuY
+      * Date: 2020/3/12
+      */
+    public function destroy(){
+        // 退出
+        Auth::logout();
+        // 闪存消息
+        session()->flash('success', '您已成功退出！');
+        return redirect('login');
+    }
 }
