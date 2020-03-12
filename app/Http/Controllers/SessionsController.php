@@ -31,7 +31,8 @@ class SessionsController extends Controller
         ]);
 
         // 使用Auth::attempt，从数据库查找数据并匹配,匹配成功会创建一个『会话』给通过认证的用户，通过Auth::user() 方法来获取 当前登录用户 的信息
-        if (Auth::attempt($credentials)){
+        // 使用$request->has('remember')【记住我】功能，自动生效
+        if (Auth::attempt($credentials,$request->has('remember'))){
             // 登录成功后的相关操作
             session()->flash('success', '欢迎回来！');
             return redirect()->route('users.show', [Auth::user()]);
