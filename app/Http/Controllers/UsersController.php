@@ -11,7 +11,7 @@ class UsersController extends Controller
     public function __construct(){
         // 身份验证-Auth中间件过滤未登录用户的动作
         $this->middleware('auth', [
-           'except' => ['show', 'create', 'store']
+           'except' => ['show', 'create', 'store', 'index']
         ]);
 
         // 只允许未登录用户的动作
@@ -94,5 +94,16 @@ class UsersController extends Controller
         session()->flash('success', '个人资料更新成功！');
 
         return redirect()->route('users.show', $user->id);
+    }
+
+    /**
+      * Desc: 用户页
+      * User: YuY
+      * Date: 2020/3/13
+      */
+    public function index()
+    {
+        $users = User::paginate(10);
+        return view('users.index', compact('users'));
     }
 }
