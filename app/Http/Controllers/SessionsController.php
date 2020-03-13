@@ -8,6 +8,18 @@ use Auth;
 class SessionsController extends Controller
 {
     /**
+      * Desc: 用户过滤
+      * User: YuY
+      * Date: 2020/3/13
+      */
+    public function __construct()
+    {
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
+    /**
      * Desc: 创建用户页面
      * User: YuY
      * Date: 2020/3/11
@@ -35,7 +47,9 @@ class SessionsController extends Controller
         if (Auth::attempt($credentials,$request->has('remember'))){
             // 登录成功后的相关操作
             session()->flash('success', '欢迎回来！');
-            return redirect()->route('users.show', [Auth::user()]);
+            $fallback = route('users.show', Auth::user());
+            // 使用intended可将页面重定向到上一次请求尝试的页面，如果没有，则跳转到默认地址
+            return redirect()->intended($fallback);
         } else {
             // 登录失败后的相关操作
             // 使用 withInput() 后模板里 old('email') 将能获取到上一次用户提交的内容

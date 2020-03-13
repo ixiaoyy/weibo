@@ -8,6 +8,18 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    public function __construct(){
+        // 身份验证-Auth中间件过滤未登录用户的动作
+        $this->middleware('auth', [
+           'except' => ['show', 'create', 'store']
+        ]);
+
+        // 只允许未登录用户的动作
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     // 用户注册
     public function create()
     {
@@ -48,17 +60,19 @@ class UsersController extends Controller
 
     /**
      * Desc: 编辑用户页面
-     * User: LiJin
+     * User: YuY
      * Date: 2020/3/13
      */
     public function edit(User $user)
     {
+        // 授权策略
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
     /**
      * Desc: 更新用户
-     * User: LiJin
+     * User: YuY
      * Date: 2020/3/13
      */
     public function update(User $user, Request $request)
@@ -79,6 +93,6 @@ class UsersController extends Controller
 
         session()->flash('success', '个人资料更新成功！');
 
-        return redirect()->route('users.show', $user);
+        return redirect()->route('users.show', $user->id);
     }
 }
