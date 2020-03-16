@@ -29,4 +29,14 @@ class UserPolicy
         // 当前登录用户实例必须等于要进行授权的用户
         return $currentUser->id === $user->id;
     }
+
+    /**
+     * Desc: 删除策略
+     * User: LiJin
+     * Date: 2020/3/16
+     */
+    public function destroy(User $currentUser, User $user)
+    {
+        return $currentUser->is_admin && $currentUser->id !== $user->id;
+    }
 }
